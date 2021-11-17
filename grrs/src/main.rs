@@ -1,14 +1,12 @@
-fn main() {
-    let pattern = std::env::args().nth(1).expect("no pattern given");
-    let path = std::env::args().nth(2).expect("no path given");
+use structopt::StructOpt;
 
-    let args = Cli {
-        pattern: pattern,
-        path: path,
-    }
+fn main() {
+    let args = Cli::from_args();
 }
 
+#[derive(StructOpt)]
 struct Cli {
     pattern: String,
+    #[structopt(parse(from_os_str))]
     path: std::path::PathBuf,
 }
