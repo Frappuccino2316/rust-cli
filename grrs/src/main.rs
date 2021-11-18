@@ -3,19 +3,16 @@ use structopt::StructOpt;
 fn main() {
     let args = Cli::from_args();
 
-    // let content = std::fs::read_to_string(&args.path).expect("could not read file");
     let result = std::fs::read_to_string(&args.path);
-    match result {
-        Ok(content) => {
-            println!("File content: {}", content);
+    let content = match result {
+        Ok(content) => { content }
+        Err(error) => { panic!("oh noes: {}", error); }
+    };
 
-            for line in content.lines() {
-                if line.contains(&args.pattern) {
-                    println!("{}", line);
-                }
-            }
+    for line in content.lines() {
+        if line.contains(&args.pattern) {
+            println!("{}", line);
         }
-        Err(error) => { println!("oh noes: {}", error); }
     }
 }
 
