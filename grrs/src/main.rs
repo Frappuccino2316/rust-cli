@@ -1,14 +1,25 @@
 // use structopt::StructOpt;
+use anyhow::{Context, Result};
 
-#[derive(Debug)]
-struct CustomError(String);
-
-fn main() -> Result<(), CustomError> {
+// with_contextを使う
+fn main() -> Result<()> {
     let path = "src/test2.txt";
-    let content = std::fs::read_to_string(path).map_err(|err| CustomError(format!("Error reading `{}`: {}", path, err)))?;
+    let content = std::fs::read_to_string(path)
+        .with_context(|| format!("could not read file: {}", path))?;
     println!("file content: {}", content);
     Ok(())
 }
+
+// カスタムエラーを作った
+// #[derive(Debug)]
+// struct CustomError(String);
+
+// fn main() -> Result<(), CustomError> {
+//     let path = "src/test2.txt";
+//     let content = std::fs::read_to_string(path).map_err(|err| CustomError(format!("Error reading `{}`: {}", path, err)))?;
+//     println!("file content: {}", content);
+//     Ok(())
+// }
 
 // unwrapを使うパターン
 // fn main() {
