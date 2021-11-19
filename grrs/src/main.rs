@@ -20,7 +20,7 @@
 // }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let result = std::fs::read_to_string("src/test.txt");
+    let result = std::fs::read_to_string("src/test2.txt");
     let content = match result {
         Ok(content) => { content },
         Err(error) => { return Err(error.into()); }
