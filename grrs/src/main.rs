@@ -1,5 +1,15 @@
 // use structopt::StructOpt;
 
+#[derive(Debug)]
+struct CustomError(String);
+
+fn main() -> Result<(), CustomError> {
+    let path = "src/test2.txt";
+    let content = std::fs::read_to_string(path).map_err(|err| CustomError(format!("Error reading `{}`: {}", path, err)))?;
+    println!("file content: {}", content);
+    Ok(())
+}
+
 // unwrapを使うパターン
 // fn main() {
 //     let args = Cli::from_args();
@@ -32,8 +42,8 @@
 // }
 
 // ?を使うパターン
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let content = std::fs::read_to_string("src/test.txt")?;
-    println!("file content: {}", content);
-    Ok(())
-}
+// fn main() -> Result<(), Box<dyn std::error::Error>> {
+//     let content = std::fs::read_to_string("src/test.txt")?;
+//     println!("file content: {}", content);
+//     Ok(())
+// }
